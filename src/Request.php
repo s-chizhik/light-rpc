@@ -41,7 +41,21 @@ class Request implements Arrayable, JsonSerializable, Jsonable
      */
     public function __construct(...$params)
     {
+        $this->setParams($params);
+    }
+
+    /**
+     * Change the request params.
+     *
+     * @param array $params Request params to set.
+     *
+     * @return $this Fluent return.
+     */
+    public function setParams(array $params) : self
+    {
         $this->params = collect($params);
+
+        return $this;
     }
 
     /**

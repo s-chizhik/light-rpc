@@ -7,6 +7,7 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
 use JsonSerializable;
 
 /**
@@ -204,13 +205,13 @@ class Response implements Arrayable, Jsonable, JsonSerializable
         // stop when no body is present.
         if ($body) {
             // parse the response id from the body.
-            $this->id = (int) array_get($body, 'id', null);
+            $this->id = (int) Arr::get($body, 'id', null);
 
             // set as error when there is a an error key and it's not null.
-            $this->isError = array_get($body, 'error', null) !== null;
+            $this->isError = Arr::get($body, 'error', null) !== null;
 
             // parse the response data, from result or error.
-            $this->data = collect(array_get($body, $this->isError ? 'error' : 'result', []));
+            $this->data = collect(Arr::get($body, $this->isError ? 'error' : 'result', []));
         }
 
         // just return the response body.
